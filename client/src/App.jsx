@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-     <h1 className='text-5xl text-center'>This is heading one tag</h1>
+     <h1 className='text-5xl text-center'>This is another heasding</h1>
     </>
   )
 }
