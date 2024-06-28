@@ -4,11 +4,10 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-     <h1 className='text-5xl text-center'>This is another heasding</h1>
+     <h1 className='text-5xl text-center font-lato'>This is another heasding</h1>
     </>
   )
 }
