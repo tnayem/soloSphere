@@ -3,7 +3,8 @@ import logo from '../assets/images/logo.png'
 import { AuthContext } from '../provider/AuthProvider';
 import { Link } from 'react-router-dom';
 const Navbar = () => {
-    const user = useContext(AuthContext)
+    const {user, logOut} = useContext(AuthContext)
+    console.log(user);
     return (
         <div className='navbar bg-base-100 shadow-sm container px-4 mx-auto'>
             <div className='flex-1'>
@@ -19,7 +20,7 @@ const Navbar = () => {
                     </li>
 
                     {
-                        !user?.user && (
+                        !user && (
                             <li>
                                 <Link to='/login'>Login</Link>
                             </li>
@@ -28,7 +29,7 @@ const Navbar = () => {
                 </ul>
 
                 {
-                    user?.user && (
+                    user && (
                         <div className='dropdown dropdown-end z-50'>
                             <div
                                 tabIndex={0}
@@ -39,7 +40,7 @@ const Navbar = () => {
                                     <img
                                         referrerPolicy='no-referrer'
                                         alt='User Profile Photo'
-                                        src=''
+                                        src={user?.photoURL}
                                     />
                                 </div>
                             </div>
@@ -59,7 +60,7 @@ const Navbar = () => {
                                 <li>
                                     <div>Bid Requests</div>
                                 </li>
-                                <li className='mt-2'>
+                                <li onClick={logOut} className='mt-2'>
                                     <button className='bg-gray-200 block text-center'>Logout</button>
                                 </li>
                             </ul>
