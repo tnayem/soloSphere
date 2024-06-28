@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCd418o4f72xkGLmYGU0TI2OFIo8RDRLdU",
-  authDomain: "solo-sphere-f6c01.firebaseapp.com",
-  projectId: "solo-sphere-f6c01",
-  storageBucket: "solo-sphere-f6c01.appspot.com",
-  messagingSenderId: "1083486855025",
-  appId: "1:1083486855025:web:fbbe32127875ce3cef20d0"
+  apiKey: "AIzaSyAqAMGmJj_07GJBOcRIRozoDvPRgktHq-g",
+  authDomain: "solospherenew.firebaseapp.com",
+  projectId: "solospherenew",
+  storageBucket: "solospherenew.appspot.com",
+  messagingSenderId: "184236541413",
+  appId: "1:184236541413:web:09cc1254ce5ca77dd3db0c"
 };
 
 // Initialize Firebase
