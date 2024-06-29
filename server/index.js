@@ -18,7 +18,7 @@ app.use(express.json())
 // LAhD2lcmfxLefus7
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ycg9h6w.mongodb.net/?appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -39,7 +39,13 @@ async function run() {
             const result = await jobsCollection.find().toArray()
             res.send(result)
         })
-        
+        // Get a single data from db
+        app.get('/job/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)}
+            const result = await jobsCollection.findOne(query);
+            res.send(result)
+        })
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {

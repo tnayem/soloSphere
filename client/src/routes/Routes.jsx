@@ -4,6 +4,8 @@ import Root from "../layouts/Root";
 import Home from "../pages/Home";
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
+import JobCard from "../components/JobCard";
+import JobDetails from "../pages/JobDetails";
 const router = createBrowserRouter([
     {
         path:'/',
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path:'/register',
                 element:<Register></Register>
+            },
+            {
+                path:'/job/:id',
+                element:<JobDetails></JobDetails>
             }
         ]
     }
