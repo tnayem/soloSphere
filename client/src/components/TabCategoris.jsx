@@ -1,10 +1,20 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import JobCard from './JobCard';
+import { useEffect, useState } from 'react';
+import axios from "axios"
 const TabCategoris = () => {
+    const [jobs,setJobs] = useState([])
+    useEffect(()=>{
+        const getJobs = async()=>{
+            const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`)
+            setJobs(data)
+        }
+        getJobs()
+    },[])
     return (
         <Tabs>
-            <div  className=' container px-6 py-10 mx-auto'>
+            <div className=' container px-6 py-10 mx-auto'>
                 <h1 className='text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl '>
                     Browse Jobs By Categories
                 </h1>
@@ -23,13 +33,25 @@ const TabCategoris = () => {
                 </div>
 
                 <TabPanel>
-                    <JobCard/>
+                    <div className='grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                        {
+                            jobs?.filter(j => j.category === "WebDevelopment").map(job => (<JobCard key={job._id} job={job} />))
+                        }
+                    </div>
                 </TabPanel>
                 <TabPanel>
-                    <h2>Any content 2</h2>
+                    <div className='grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                        {
+                            jobs?.filter(j => j.category === "GraphicDesign").map(job => (<JobCard key={job._id} job={job} />))
+                        }
+                    </div>
                 </TabPanel>
                 <TabPanel>
-                    <h2>Any content 3</h2>
+                    <div className='grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                        {
+                            jobs?.filter(j => j.category === "DigitalMarketing").map(job => (<JobCard key={job._id} job={job} />))
+                        }
+                    </div>
                 </TabPanel>
             </div>
         </Tabs>
