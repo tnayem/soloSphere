@@ -1,10 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 const JobDetails = () => {
-    const {user} = useContext(AuthContext)
+    const [startDate, setStartDate] = useState(new Date());
+    const { user } = useContext(AuthContext)
     const job = useLoaderData()
     const {
         _id,
@@ -14,7 +19,30 @@ const JobDetails = () => {
         max_price,
         category,
         deadline,
-      } = job || {}
+        buyer_email
+    } = job || {}
+    const handleFormSubmission = async (e) => {
+        if(user?.email === buyer_email) return toast.error("Action not Permitted")
+        e.preventDefault()
+        const form = e.target
+        const jobId = _id
+        const price = parseFloat(form.price.value)
+        if(price<parseFloat(min_price)) return toast.error("Offer more or at least equal to minimum Price")
+        const comment = form.comment.value;
+        const email = user?.email;
+        const deadline = startDate
+        // const buyer_email = buyer_email;
+        const status = "pending";
+        const bidData = {
+            jobId, price, comment, email, buyer_email, status, job_title, category,deadline
+        }
+        try {
+            const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bid`,bidData)
+            console.log(data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div className='flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto '>
             {/* Job Details */}
@@ -61,7 +89,7 @@ const JobDetails = () => {
                     Place A Bid
                 </h2>
 
-                <form>
+                <form onSubmit={handleFormSubmission}>
                     <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2'>
                         <div>
                             <label className='text-gray-700 ' htmlFor='price'>
@@ -72,7 +100,7 @@ const JobDetails = () => {
                                 type='text'
                                 name='price'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
-                                
+
                             />
                         </div>
 
@@ -103,8 +131,8 @@ const JobDetails = () => {
                         </div>
                         <div className='flex flex-col gap-2 '>
                             <label className='text-gray-700'>Deadline</label>
-
                             {/* Date Picker Input Field */}
+                            <DatePicker className="border py-2 px-2 rounded-md" selected={startDate} onChange={(date) => setStartDate(date)} />
                         </div>
                     </div>
 
