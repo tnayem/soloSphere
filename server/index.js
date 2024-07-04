@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const port = process.env.PORT || 5000
+
 
 const app = express()
 const corsOptions = {
@@ -18,7 +20,7 @@ app.use(express.json())
 // LAhD2lcmfxLefus7
 
 
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ycg9h6w.mongodb.net/?appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -36,13 +38,13 @@ async function run() {
         const bidsCollection = client.db('soloSphere').collection('bids')
         // Get All Jobs Data from db
         app.get('/jobs', async(req,res)=>{
-            const result = await jobsCollection.find().toArray()
+            const result = await jobsCollection.find().toArray();
             res.send(result)
         })
         // Get a single data from db
         app.get('/job/:id', async(req,res)=>{
-            const id = req.params.id;
-            const query = {_id: new ObjectId(id)}
+            const id = req.params.id
+            const query = {_id : new ObjectId(id)}
             const result = await jobsCollection.findOne(query);
             res.send(result)
         })
